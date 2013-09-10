@@ -66,6 +66,13 @@
     [self.previousNextControl setEnabled:enabled forSegmentAtIndex:0];
 }
 
+#pragma mark - Helper
+
+static NSString * UIKitLocalizedString(NSString *string)
+{
+	NSBundle *UIKitBundle = [NSBundle bundleForClass:[UIApplication class]];
+	return UIKitBundle ? [UIKitBundle localizedStringForKey:string value:string table:nil] : string;
+}
 
 #pragma mark - Object lifecycle
 
@@ -73,17 +80,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-	self.barStyle = UIBarStyleBlackTranslucent;
-	_previousNextControl = [[UISegmentedControl alloc] initWithItems:@[
-                            NSLocalizedString(@"Previous", @"EZForm Standard Input Accessory view - Previous"),
-                            NSLocalizedString(@"Next", @"EZForm Standard Input Accessory view - Next")]];
-	_previousNextControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	_previousNextControl.momentary = YES;
-	[_previousNextControl addTarget:self action:@selector(previousNextAction:) forControlEvents:UIControlEventValueChanged];
-	UIBarButtonItem *previousNextItem = [[UIBarButtonItem alloc] initWithCustomView:self.previousNextControl];
-	UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem* doneItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"EZForm Standard Input Accessory view - Done") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)];
-	[self setItems:@[previousNextItem, flexibleItem, doneItem]];
+        self.barStyle = UIBarStyleBlackTranslucent;
+        _previousNextControl = [[UISegmentedControl alloc] initWithItems:@[ UIKitLocalizedString(@"Previous"), UIKitLocalizedString(@"Next") ]];
+        _previousNextControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        _previousNextControl.momentary = YES;
+        [_previousNextControl addTarget:self action:@selector(previousNextAction:) forControlEvents:UIControlEventValueChanged];
+        UIBarButtonItem *previousNextItem = [[UIBarButtonItem alloc] initWithCustomView:self.previousNextControl];
+        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+        [self setItems:@[previousNextItem, flexibleItem, doneItem]];
     }
     return self;
 }
