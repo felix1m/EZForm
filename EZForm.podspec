@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/urbn/EZForm.git"
   s.license      = 'MIT'
   s.author       = { "Chris Miles" => "miles.chris@gmail.com" }
-  s.source       = { :git => "https://github.com/urbn/EZForm.git", :tag => "1.1.2" }
+  s.source       = { :git => "https://github.com/felix1m/EZForm.git", :tag => "1.1.3" }
   s.platform     = :ios, '5.0'
   s.source_files = 'EZForm/EZForm/src'
   s.framework = 'UIKit'
