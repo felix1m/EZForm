@@ -89,6 +89,7 @@ static NSString * UIKitLocalizedString(NSString *string)
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
         [self setItems:@[previousNextItem, flexibleItem, doneItem]];
+        doneItem.accessibilityLabel = @"Keyboard Done Item";
     }
     return self;
 }
