@@ -24,8 +24,17 @@
 
 #import "EZFormStandardInputAccessoryView.h"
 
+#ifndef IOS7orHigher
+#define IOS7orHigher ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+#endif
+
+
 @interface EZFormStandardInputAccessoryView ()
 @property (nonatomic, strong) UISegmentedControl *previousNextControl;
+@property (nonatomic, strong) UIBarButtonItem *previousItem;
+@property (nonatomic, strong) UIBarButtonItem *nextItem;
+
+
 @end
 
 
@@ -34,15 +43,23 @@
 
 - (void)previousNextAction:(id)sender
 {
-    UISegmentedControl *control = (UISegmentedControl *)sender;
-    __strong id<EZFormInputAccessoryViewDelegate> inputAccessoryViewDelegate = self.inputAccessoryViewDelegate;
-    
-    if (0 == control.selectedSegmentIndex) {
-	[inputAccessoryViewDelegate inputAccessoryViewSelectedPreviousField];
+    if (0 ==  [(UISegmentedControl *)sender selectedSegmentIndex]) {
+        [self previousAction:sender];
+    } else {
+        [self nextAction:sender];
     }
-    else {
-	[inputAccessoryViewDelegate inputAccessoryViewSelectedNextField];
-    }
+}
+
+- (void)previousAction:(id)sender
+{
+    [self.inputAccessoryViewDelegate inputAccessoryViewSelectedPreviousField];
+
+}
+
+- (void)nextAction:(id)sender
+{
+    [self.inputAccessoryViewDelegate inputAccessoryViewSelectedNextField];
+
 }
 
 - (void)doneAction:(id)sender
@@ -56,14 +73,22 @@
 
 #pragma mark - EZFormInputAccessoryViewProtocol methods
 
-- (void)setNextActionEnabled:(BOOL)enabled
-{
-    [self.previousNextControl setEnabled:enabled forSegmentAtIndex:1];
-}
-
 - (void)setPreviousActionEnabled:(BOOL)enabled
 {
-    [self.previousNextControl setEnabled:enabled forSegmentAtIndex:0];
+    if (IOS7orHigher) {
+        self.previousItem.enabled = enabled;
+    } else {
+        [self.previousNextControl setEnabled:enabled forSegmentAtIndex:0];
+    }
+}
+
+- (void)setNextActionEnabled:(BOOL)enabled
+{
+    if (IOS7orHigher) {
+        self.nextItem.enabled = enabled;
+    } else {
+        [self.previousNextControl setEnabled:enabled forSegmentAtIndex:1];
+    }
 }
 
 #pragma mark - Helper
@@ -80,16 +105,39 @@ static NSString * UIKitLocalizedString(NSString *string)
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.barStyle = UIBarStyleBlackTranslucent;
-        _previousNextControl = [[UISegmentedControl alloc] initWithItems:@[ UIKitLocalizedString(@"Previous"), UIKitLocalizedString(@"Next") ]];
-        _previousNextControl.segmentedControlStyle = UISegmentedControlStyleBar;
-        _previousNextControl.momentary = YES;
-        [_previousNextControl addTarget:self action:@selector(previousNextAction:) forControlEvents:UIControlEventValueChanged];
-        UIBarButtonItem *previousNextItem = [[UIBarButtonItem alloc] initWithCustomView:self.previousNextControl];
-        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
-        [self setItems:@[previousNextItem, flexibleItem, doneItem]];
-        doneItem.accessibilityLabel = @"Keyboard Done Item";
+        if (IOS7orHigher) {
+
+            _previousItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-lightarrow-left"] style:UIBarButtonItemStylePlain target:self action:@selector(previousAction:)];
+            _previousItem.tintColor = [UIColor blackColor];
+
+            UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+            fixedSpace.width = 20.0f;
+
+            _nextItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-lightarrow-right"] style:UIBarButtonItemStylePlain target:self action:@selector(nextAction:)];
+            _nextItem.tintColor = [UIColor blackColor];
+
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+            doneItem.tintColor = [UIColor blackColor];
+            doneItem.accessibilityLabel = @"Keyboard Done Item";
+
+            [self setItems:@[_previousItem, fixedSpace, _nextItem, flexibleItem, doneItem]];
+
+        } else {
+
+            self.barStyle = UIBarStyleBlackTranslucent;
+            _previousNextControl = [[UISegmentedControl alloc] initWithItems:@[ UIKitLocalizedString(@"Previous"), UIKitLocalizedString(@"Next") ]];
+            _previousNextControl.segmentedControlStyle = UISegmentedControlStyleBar;
+            _previousNextControl.momentary = YES;
+            [_previousNextControl addTarget:self action:@selector(previousNextAction:) forControlEvents:UIControlEventValueChanged];
+            UIBarButtonItem *previousNextItem = [[UIBarButtonItem alloc] initWithCustomView:self.previousNextControl];
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
+            [self setItems:@[previousNextItem, flexibleItem, doneItem]];
+            doneItem.accessibilityLabel = @"Keyboard Done Item";
+
+        }
     }
     return self;
 }

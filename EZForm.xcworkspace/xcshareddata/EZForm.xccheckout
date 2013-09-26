@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>CB7F812E-B323-4581-B911-D75EAE8030D7</string>
+	<string>61DE8487-C7EF-4F99-8A3E-EA0D4711973C</string>
 	<key>IDESourceControlProjectName</key>
 	<string>EZForm</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>ED6521B8-8153-4C11-A973-7F1FEC7D53B8</key>
-		<string>ssh://github.com/chrismiles/EZForm.git</string>
+		<key>F238132C-EE33-433B-8F03-0515BF3DDFE6</key>
+		<string>ssh://github.com/felix1m/EZForm.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>EZForm.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>ED6521B8-8153-4C11-A973-7F1FEC7D53B8</key>
+		<key>F238132C-EE33-433B-8F03-0515BF3DDFE6</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/chrismiles/EZForm.git</string>
+	<string>ssh://github.com/felix1m/EZForm.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>ED6521B8-8153-4C11-A973-7F1FEC7D53B8</string>
+	<string>F238132C-EE33-433B-8F03-0515BF3DDFE6</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>ED6521B8-8153-4C11-A973-7F1FEC7D53B8</string>
+			<string>F238132C-EE33-433B-8F03-0515BF3DDFE6</string>
 			<key>IDESourceControlWCCName</key>
 			<string>EZForm</string>
 		</dict>
