@@ -397,6 +397,11 @@
 {
     [formField becomeFirstResponder];
     [self scrollFormFieldToVisible:formField];
+
+    __strong id <EZFormDelegate> strongDelegate = self.delegate;
+    if ([strongDelegate respondsToSelector:@selector(form:didSelectFormField:)]) {
+        [strongDelegate form:self didSelectFormField:formField];
+    }
 }
 
 - (void)formFieldInputFinished:(EZFormField *)formField

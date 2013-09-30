@@ -52,14 +52,19 @@
 
 - (void)previousAction:(id)sender
 {
-    [self.inputAccessoryViewDelegate inputAccessoryViewSelectedPreviousField];
+    #pragma unused(sender)
+    
+    __strong id<EZFormInputAccessoryViewDelegate> inputAccessoryViewDelegate = self.inputAccessoryViewDelegate;
+    [inputAccessoryViewDelegate inputAccessoryViewSelectedPreviousField];
 
 }
 
 - (void)nextAction:(id)sender
 {
-    [self.inputAccessoryViewDelegate inputAccessoryViewSelectedNextField];
-
+    #pragma unused(sender)
+    
+    __strong id<EZFormInputAccessoryViewDelegate> inputAccessoryViewDelegate = self.inputAccessoryViewDelegate;
+    [inputAccessoryViewDelegate inputAccessoryViewSelectedNextField];
 }
 
 - (void)doneAction:(id)sender

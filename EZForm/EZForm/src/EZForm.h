@@ -309,4 +309,6 @@ typedef enum : NSInteger {
  */
 - (NSIndexPath *)form:(EZForm *)form indexPathToAutoScrollTableForFieldKey:(NSString *)key;
 
+- (void)form:(EZForm *)form didSelectFormField:(EZFormField *)field;
+
 @end
