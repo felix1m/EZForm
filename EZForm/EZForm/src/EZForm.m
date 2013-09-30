@@ -397,6 +397,11 @@
 {
     [formField becomeFirstResponder];
     [self scrollFormFieldToVisible:formField];
+
+    __strong id <EZFormDelegate> strongDelegate = self.delegate;
+    if ([strongDelegate respondsToSelector:@selector(form:didSelectFormField:)]) {
+        [strongDelegate form:self didSelectFormField:formField];
+    }
 }
 
 - (void)formFieldInputFinished:(EZFormField *)formField
@@ -505,11 +510,6 @@
 	EZFormField *nextFormField = [self firstResponderCapableFormFieldAfterField:currentFormField searchForwards:YES];
 	if (nextFormField) {
 	    [self selectFormFieldForInput:nextFormField];
-
-            __strong id <EZFormDelegate> strongDelegate = self.delegate;
-            if ([strongDelegate respondsToSelector:@selector(form:didSelectFormField:)]) {
-                [strongDelegate form:self didSelectFormField:nextFormField];
-            }
 	}
     }
 }
@@ -521,11 +521,6 @@
 	EZFormField *nextFormField = [self firstResponderCapableFormFieldAfterField:currentFormField searchForwards:NO];
 	if (nextFormField) {
 	    [self selectFormFieldForInput:nextFormField];
-
-            __strong id <EZFormDelegate> strongDelegate = self.delegate;
-            if ([strongDelegate respondsToSelector:@selector(form:didSelectFormField:)]) {
-                [strongDelegate form:self didSelectFormField:nextFormField];
-            }
 	}
     }
 }
